@@ -1,0 +1,64 @@
+$url: "https://raw.githubusercontent.com/ParkYoungWoong/overwatch-hero-selector-vanilla/master/images";
+
+body {
+  height: 100vh;
+  background-image: url("#{$url}/bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /*배경 이미지 고정 (스크롤 해도 바꾸지 않음)*/
+}
+.container {
+  padding: 50px 0;
+  .heroes {
+    display: flex;    /*수평 정렬*/
+    flex-wrap: wrap;   /*줄 바꿈*/
+    justify-content: center;   /*수평, 가운데 정렬*/
+    max-width: 700px; /*최대값 지정, 700px 이하일때는 움직임*/
+    margin: 0 auto;  /*블록요소의 가로사이즈가 있는 상태에서 왼,오가 auto면 중앙 정렬*/
+    padding: 40px 20px;
+    .hero{
+      width: 80px;
+      height: 84px;
+      margin: 4px;  /*hero등 간에 간격 조정*/
+      border: 3px solid #ffffff;
+      border-radius: 10px;
+      box-sizing: border-box; 
+      /*border때문에 크기가 커졌는데 이때 border를 포함해서 크기를 80*84로 픽스하고 싶으면 box-sizing 사용*/
+      background-color: #555; 
+      overflow: hidden; /*넘치는 부분 잘라내기*/
+      transform: skew(-14deg);  /*마름모 만들기*/
+      transition: 
+        transform .1s,
+        background-color .6s;
+      &:hover {
+          background-color: #ff9c00;
+          transform: scale(1.3) skew(-14deg);
+          /*hover 전 상태의 transform의 skew 옮겨와야지 클릭했을 때 마름모로 보임*/
+          z-index: 1;
+      }
+      .image {
+        width: 140%;
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 90px;
+        transform: skew(14deg) translateX(-16px); 
+        /*부모 클래스에서 skew로 비틀어 놓은 거 반대로 skew해서 원래 상태로 돌려놓기*/
+      }
+
+      @for $i from 1 through 32 {
+        &:nth-child(#{$i}) .image {
+          background-image: url("#{$url}/hero#{$i}.png");
+        }
+      }
+    }
+  }
+  .logo {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 0 20px;
+    img {
+      width: 100%;
+    }
+  }
+}
